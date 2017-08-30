@@ -29,6 +29,7 @@
 
 #include "common.h"
 #include "drm-common.h"
+#include "drm-weston.h"
 
 static void
 drm_fb_destroy_callback(struct gbm_bo *bo, void *data)
@@ -149,8 +150,12 @@ int init_drm(struct drm *drm, const char *device)
 	drmModeConnector *connector = NULL;
 	drmModeEncoder *encoder = NULL;
 	int i, area;
+	char* wlsock;
 
-	drm->fd = open(device, O_RDWR);
+	if((wlsock = getenv("WESTON_LAUNCHER_SOCK")))
+		drm->fd = open_weston(wlsock, device, O_RDWR);
+	else
+		drm->fd = open(device, O_RDWR);
 
 	if (drm->fd < 0) {
 		printf("could not open drm device\n");

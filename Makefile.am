@@ -48,6 +48,7 @@ kmscube_SOURCES = \
 	drm-common.c \
 	drm-common.h \
 	drm-legacy.c \
+	drm-weston.c \
 	esTransform.c \
 	esUtil.h \
 	frame-512x512-NV12.c \
